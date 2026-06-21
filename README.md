@@ -37,3 +37,12 @@ This project was a massive learning curve. I learned how to debug static DAX out
 1. Check out the **`dashboard_preview.png`** for a quick look at the final Power BI dashboard interface.
 2. Review the **`.py`** and **`.sql`** files to see the backend data extraction and database logic.
 3. Download the **`.pbix`** file and open it in Power BI Desktop to interact with the Investment Simulator yourself.
+
+## 📬 Author & Contact
+
+**Mr. Uttam Tiwari**  
+
+I am always open to discussing data analytics, problem-solving, and new opportunities. If you have any feedback or questions about this project, feel free to reach out!
+
+*   **LinkedIn:** https://www.linkedin.com/in/uttamanalyst/
+*   **Email:** uttamtiwari.analyst@gmail.com
