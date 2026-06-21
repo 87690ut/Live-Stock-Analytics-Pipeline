@@ -34,6 +34,6 @@ I focused on a minimal, clean, and industry-standard UI design, actively removin
 This project was a massive learning curve. I learned how to debug static DAX outputs, handle data appending in SQL, manage aesthetic visual formatting, and structure a complete, automated data pipeline from scratch.
 
 ## 🚀 How to View This Project
-1. Check out the **`dashboard_preview.png`** (or `.jpg`) for a quick look at the final Power BI dashboard interface.
+1. Check out the **`dashboard_preview.png`** for a quick look at the final Power BI dashboard interface.
 2. Review the **`.py`** and **`.sql`** files to see the backend data extraction and database logic.
 3. Download the **`.pbix`** file and open it in Power BI Desktop to interact with the Investment Simulator yourself.
