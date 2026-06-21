@@ -45,4 +45,4 @@ This project was a massive learning curve. I learned how to debug static DAX out
 I am always open to discussing data analytics, problem-solving, and new opportunities. If you have any feedback or questions about this project, feel free to reach out!
 
 *   **LinkedIn:** https://www.linkedin.com/in/uttamanalyst/
-*   **Email:** mailto:uttamtiwari.analyst@gmail.com
+*   **Email:** uttamtiwari.analyst@gmail.com
