@@ -1,48 +1,50 @@
-# 📈 Stock Market Risk & Performance Analytics Dashboard
+# 📈 Financial Portfolio Risk & Performance Dashboard
 
 ## 🎯 Project Overview
-Welcome to my data analytics portfolio project! I built this end-to-end data pipeline and visualization dashboard to analyze stock market performance and assess investment risks. My goal was to create a practical, real-world tool that goes beyond simple charts by integrating data automation, dynamic DAX calculations, and an interactive investment simulator.
 
-## 🛠️ Tech Stack & Tools Used
-*   **Data Extraction & Automation:** Python (Pandas), Windows Task Scheduler
-*   **Database Management:** SQL 
-*   **Data Visualization & Modeling:** Power BI, DAX
+This is an end-to-end Data Analytics and ETL (Extract, Transform, Load) project. The goal of this project is to track the performance and risk metrics of a custom portfolio of Indian stocks (RELIANCE, TCS, INFY, HDFCBANK). It automates the extraction of live stock market data, cleans it using Python, stores it in a MySQL database, and visualizes the insights using Power BI.
 
-## 🧠 What I Built (My Approach & Effort)
-I divided this project into three main phases to ensure a clean, professional architecture:
+## 🏗️ Architecture & Data Pipeline
 
-### 1. The Backend: Data Engineering (Python & SQL)
-Instead of relying on static Excel sheets, I built a dynamic system. 
-*   Wrote a Python script to extract stock data (focusing on key tickers like INFY.NS, RELIANCE.NS, and TCS.NS).
-*   Automated the daily execution of this script using **Windows Task Scheduler** (named "Stock Market Daily Update") so the database updates automatically without manual intervention.
-*   Integrated the Python script with a SQL database using the `to_sql(if_exists='append')` method to maintain a robust historical record without overwriting old data.
+To make the data pipeline efficient and production-ready, the data loading process is divided into two logical phases:
 
-### 2. The Logic: Data Modeling & DAX 
-Calculating accurate financial metrics requires precise logic.
-*   Created custom DAX measures using `MIN` and `MAX` dates to accurately fetch the `First_Price` and `Last_Price` of stocks based on the selected timeframe.
-*   Implemented the `HASONEVALUE` function to ensure calculations and titles adapt seamlessly only when a specific stock ticker is selected.
-*   Engineered a custom ROI (Return on Investment) percentage calculation.
+### Phase 1: Historical Data Load (Base Setup)
 
-### 3. The Frontend: Power BI Dashboard
-I focused on a minimal, clean, and industry-standard UI design, actively removing heavy shadows and confusing legends for better readability.
-*   **Investment Simulator:** Built a 'What-If' parameter allowing users to input investment amounts (e.g., 10k to 100k) to instantly see potential portfolio values.
-*   **Dynamic Smart Titles:** The dashboard title dynamically updates to reflect the exact stock the user is currently analyzing.
-*   **Risk Assessment:** Designed a custom Gauge chart for 'Average Volatility' and a Donut chart categorizing '20 Days Volatility Risk' into High, Medium, and Low risk zones using strict color coding (Red/Yellow/Green).
-*   **Trend Analysis:** Plotted the Closing Price versus the 50-Day Moving Average to visualize market trends clearly.
+- **Objective:** To build the foundational database.
+- **Process:** Fetched 1 year of historical stock data using the `yfinance` API. The data was processed, flattened, and initially saved into a CSV format before being pushed to the MySQL database.
+- **Status:** Executed once.
 
-## 💡 Key Learnings
-This project was a massive learning curve. I learned how to debug static DAX outputs, handle data appending in SQL, manage aesthetic visual formatting, and structure a complete, automated data pipeline from scratch.
+### Phase 2: Automated Daily Incremental Load (Current)
 
-## 🚀 How to View This Project
-1. Check out the **`dashboard_preview.png`** for a quick look at the final Power BI dashboard interface.
-2. Review the **`.py`** and **`.sql`** files to see the backend data extraction and database logic.
-3. Download the **`.pbix`** file and open it in Power BI Desktop to interact with the Investment Simulator yourself.
+- **Objective:** To keep the dashboard updated with live market data without duplicating past records.
+- **Process:** A new Python script (`daily_stock_update.py`) runs daily. Instead of fetching years of data, it strictly fetches the **previous 1 day's data** (`period="1d"`).
+- **Transformation:** It cleans the data in memory, drops conflicting columns (like 'Dividends' and 'Stock Splits' to prevent schema mismatch), handles timezone formatting, and directly appends the fresh rows to the existing MySQL table using `SQLAlchemy`.
+- **Automation:** Designed to be scheduled via Windows Task Scheduler for zero-touch daily updates.
 
-## 📬 Author & Contact
+## 🛠️ Tech Stack Used
 
-**Mr. Uttam Tiwari**  
+- **Data Extraction & Transformation:** Python (`yfinance`, `pandas`)
+- **Database Management:** MySQL (`sqlalchemy`, `pymysql`)
+- **Data Visualization:** Power BI (DAX, Interactive Dashboards)
 
-I am always open to discussing data analytics, problem-solving, and new opportunities. If you have any feedback or questions about this project, feel free to reach out!
+## 📂 Repository Structure
 
-*   **LinkedIn:** https://www.linkedin.com/in/uttamanalyst/
-*   **Email:** uttamtiwari.analyst@gmail.com
+- `daily_stock_update.py` - The main ETL script for fetching and appending daily live data.
+- `Stock_Market_Dashboard.pbix` - The Power BI file containing the data model and visualizations.
+- `dashboard_preview.png` - A high-quality snapshot of the final dashboard.
+- _(Note: Phase 1 initial extraction scripts are archived locally as they are no longer needed for daily operations)._
+
+## 📊 Key Dashboard Metrics
+
+- **Latest Price & Portfolio Value:** Real-time tracking of asset worth.
+- **ROI Percentage:** Return on Investment calculated against historical baselines.
+- **50-Day Moving Average vs Closing Price:** Trend analysis chart.
+- **20 Days Volatility Risk:** A gauge chart indicating current market risk based on recent fluctuations.
+
+## 🚀 How It Works (Daily Flow)
+
+1. Python script connects to the Yahoo Finance API.
+2. Extracts today's closing metrics for the selected tickers.
+3. Cleans and transforms the data payload.
+4. Appends the new rows securely into the MySQL `indian_stocks_data` table.
+5. Power BI reads the updated database and refreshes the visual dashboard.
